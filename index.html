@@ -505,7 +505,14 @@
                 const result = await response.json();
 
                 if (result && result.status === "success" && Array.isArray(result.plants) && result.plants.length > 0) {
-                    PLANT_DATABASE = result.plants;
+                    PLANT_DATABASE = result.plants.map(p => {
+                        let url = p.plantUrl || `${GOOGLE_SITE_BASE_URL}?plant=${p.id}`;
+                        if (url.includes('sites.google.com') || url.includes('site.google.com')) {
+                            url = `${GOOGLE_SITE_BASE_URL}?plant=${p.id}`;
+                        }
+                        return { ...p, plantUrl: url };
+                    });
+
                     if (statusText) statusText.innerText = `Terhubung Web App API (${PLANT_DATABASE.length} Tanaman)`;
                     if (syncDot) syncDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500";
                     if (syncPulse) syncPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
@@ -595,7 +602,7 @@
                 let plantUrl = c[15]?.v ? String(c[15].v).trim() : `${GOOGLE_SITE_BASE_URL}?plant=${plantId}`;
                 
                 // Tentukan pautan GitHub Pages secara automatik sekiranya pautan asal Google Sites dikesan
-                if (plantUrl.includes('sites.google.com')) {
+                if (plantUrl.includes('sites.google.com') || plantUrl.includes('site.google.com')) {
                     plantUrl = `${GOOGLE_SITE_BASE_URL}?plant=${plantId}`;
                 }
 
@@ -875,7 +882,11 @@
             updateDetailFavBtn();
 
             // Construct Full Page URL for QR Code & Sharing (Guna format ?plant=ID)
-            const currentFullUrl = plant.plantUrl || `${GOOGLE_SITE_BASE_URL}?plant=${plant.id}`;
+            let currentFullUrl = plant.plantUrl || `${GOOGLE_SITE_BASE_URL}?plant=${plant.id}`;
+            if (currentFullUrl.includes('sites.google.com') || currentFullUrl.includes('site.google.com')) {
+                currentFullUrl = `${GOOGLE_SITE_BASE_URL}?plant=${plant.id}`;
+            }
+            plant.plantUrl = currentFullUrl;
             document.getElementById('plantPageUrlInput').value = currentFullUrl;
 
             // Generate Dedicated Dynamic QR Code
@@ -891,8 +902,9 @@
 
         function generatePlantQRCode(urlOrId) {
             let targetUrl = urlOrId;
-            if (!targetUrl.startsWith('http')) {
-                targetUrl = `${GOOGLE_SITE_BASE_URL}?plant=${urlOrId}`;
+            if (!targetUrl.startsWith('http') || targetUrl.includes('sites.google.com') || targetUrl.includes('site.google.com')) {
+                const cleanId = targetUrl.includes('plant=') ? targetUrl.split('plant=')[1] : targetUrl;
+                targetUrl = `${GOOGLE_SITE_BASE_URL}?plant=${cleanId}`;
             }
 
             const qrcodeContainer = document.getElementById('qrcode');
