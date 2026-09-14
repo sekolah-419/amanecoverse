@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ms" class="h-full">
+<head>p
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Direktori Tanaman EcoVerse</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- QRCode.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        eco: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                            950: '#052e16',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-full flex flex-col antialiased">
+
+    <!-- Header / Navbar -->
+    <header class="bg-white/90 backdrop-blur-md sticky top-0 z-40 border-b border-emerald-100 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo & Branding -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateToHome()">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-green-700 flex items-center justify-center text-white shadow-md shadow-emerald-500/20">
+                        <i data-lucide="sprout" class="w-6 h-6"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-extrabold tracking-tight bg-gradient-to-r from-emerald-700 via-green-600 to-teal-800 bg-clip-text text-transparent">EcoVerse</span>
+                        <span class="block text-[10px] font-semibold tracking-wider text-emerald-600 uppercase">Direktori Tanaman & Herba</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <button onclick="navigateToHome()" class="text-xs sm:text-sm font-medium text-slate-600 hover:text-emerald-700 px-3 py-2 rounded-lg transition-colors flex items-center gap-1.5">
+                        <i data-lucide="layout-grid" class="w-4 h-4"></i>
+                        <span>Katalog</span>
+                    </button>
+                    <button onclick="toggleFavoritesModal()" class="text-xs sm:text-sm font-medium text-slate-600 hover:text-rose-600 px-3 py-2 rounded-lg transition-colors flex items-center gap-1.5 relative">
+                        <i data-lucide="heart" class="w-4 h-4"></i>
+                        <span class="hidden sm:inline">Kegemaran</span>
+                        <span id="favCountBadge" class="hidden bg-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full">0</span>
+                    </button>
+                    <button onclick="openRandomPlant()" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-medium text-xs sm:text-sm px-3 py-2 rounded-xl transition-all flex items-center gap-1.5 border border-emerald-200">
+                        <i data-lucide="shuffle" class="w-4 h-4"></i>
+                        <span class="hidden md:inline">Tanaman Rawak</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- VIEW 1: HOME CATALOG VIEW -->
+        <section id="catalogView" class="space-y-6">
+            <!-- Hero Banner & Quick Search -->
+            <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-800 via-green-800 to-teal-900 text-white p-6 sm:p-10 shadow-xl">
+                <div class="absolute -right-10 -bottom-10 opacity-10 pointer-events-none">
+                    <i data-lucide="tree-pine" class="w-96 h-96"></i>
+                </div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 mb-4 backdrop-blur-sm">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Informasi Botani EcoVerse
+                    </span>
+                    <h1 class="text-2xl sm:text-4xl font-black tracking-tight leading-tight text-white mb-3">
+                        Peneroka Botani & Direktori Tanaman Kompleks
+                    </h1>
+                    <p class="text-emerald-100 text-sm sm:text-base leading-relaxed mb-6">
+                        Jelajahi spesies tanaman hiasan, herba, serta flora tempatan dan antarabangsa berserta profil spesifikasi saintifik dan kod QR khas bagi setiap halaman tanaman.
+                    </p>
+
+                    <!-- Search Box -->
+                    <div class="relative max-w-xl">
+                        <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                            <i data-lucide="search" class="w-5 h-5"></i>
+                        </div>
+                        <input type="text" id="searchInput" oninput="handleFilterChange()" placeholder="Cari nama tanaman, nama saintifik, atau famili (cth: Monstera, Sansevieria)..." class="w-full pl-11 pr-10 py-3.5 text-sm sm:text-base bg-white text-slate-900 rounded-2xl shadow-lg focus:outline-none focus:ring-4 focus:ring-emerald-400/50 transition-all placeholder:text-slate-400">
+                        <button id="clearSearchBtn" onclick="clearSearch()" class="hidden absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600">
+                            <i data-lucide="x-circle" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controls Toolbar: Filters & Sorting -->
+            <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-slate-200/80 space-y-4">
+                
+                <!-- Google Sheet Live Connection Bar -->
+                <div class="bg-emerald-50/80 border border-emerald-200 rounded-xl p-3 flex flex-wrap items-center justify-between gap-3 text-xs">
+                    <div class="flex items-center gap-2">
+                        <span class="relative flex h-2.5 w-2.5">
+                            <span id="syncPulse" class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                            <span id="syncDot" class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+                        </span>
+                        <span class="font-bold text-slate-700">Sumber Data:</span>
+                        <span id="sheetStatusText" class="text-emerald-800 font-mono text-[11px] truncate max-w-xs sm:max-w-md">Sambungan Web App API Active</span>
+                    </div>
+                    <button onclick="loadDataFromGoogleSheet(true)" class="bg-white hover:bg-emerald-100 text-emerald-800 border border-emerald-300 font-semibold px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 shadow-sm">
+                        <i data-lucide="refresh-cw" class="w-3.5 h-3.5" id="refreshSheetIcon"></i>
+                        <span>Kemas Kini Data Live</span>
+                    </button>
+                </div>
+
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <!-- Category Tabs -->
+                    <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 custom-scrollbar text-xs sm:text-sm font-medium" id="categoryFilterContainer">
+                        <!-- Dynamic categories will be generated here -->
+                    </div>
+
+                    <!-- Additional Filters & Sort -->
+                    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <select id="lightFilter" onchange="handleFilterChange()" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500">
+                            <option value="">Semua Cahaya</option>
+                            <option value="Cahaya Penuh (Direct Sun)">Cahaya Penuh</option>
+                            <option value="Cahaya Terang Tidak Terus (Indirect Light)">Cahaya Tidak Terus</option>
+                            <option value="Separuh Teduh (Partial Shade)">Separuh Teduh</option>
+                        </select>
+
+                        <select id="sortSelect" onchange="handleFilterChange()" class="bg-slate-50 border border-slate-200 text-slate-700 text-xs sm:text-sm rounded-xl px-3 py-2 focus:outline-none focus:border-emerald-500">
+                            <option value="name-asc">Nama (A - Z)</option>
+                            <option value="name-desc">Nama (Z - A)</option>
+                            <option value="scientific-asc">Nama Saintifik (A - Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Result Status Bar -->
+                <div class="flex items-center justify-between text-xs text-slate-500 pt-2 border-t border-slate-100">
+                    <div>
+                        Menunjukkan <span id="resultCount" class="font-bold text-slate-800">0</span> tanaman
+                    </div>
+                    <div id="activeFilterBadge" class="hidden text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md font-medium">
+                        Penapis Aktif
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plant Grid Container -->
+            <div id="plantGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Dynamic plant cards injected here -->
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-dashed border-slate-200 p-8">
+                <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="search-x" class="w-8 h-8"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-800 mb-1">Tiada Tanaman Ditemui</h3>
+                <p class="text-slate-500 text-sm max-w-md mx-auto mb-6">Cuba ubah kata kunci carian atau tetapkan semula penapis kategori anda.</p>
+                <button onclick="resetFilters()" class="inline-flex items-center gap-2 bg-emerald-600 text-white text-sm font-semibold px-4 py-2.5 rounded-xl hover:bg-emerald-700 transition-colors shadow-md shadow-emerald-600/20">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i> Reset Semua Penapis
+                </button>
+            </div>
+        </section>
+
+
+        <!-- VIEW 2: SINGLE PLANT DEDICATED PAGE VIEW -->
+        <section id="detailView" class="hidden space-y-6">
+            <!-- Navigation Back Button & Page Header -->
+            <div class="flex items-center justify-between gap-4 no-print">
+                <button onclick="navigateToHome()" class="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-700 font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl border border-slate-200 shadow-sm transition-all">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Kembali ke Katalog
+                </button>
+                <div class="flex items-center gap-2">
+                    <button id="toggleFavBtn" onclick="toggleCurrentFavorite()" class="inline-flex items-center gap-1.5 bg-white hover:bg-rose-50 text-slate-700 hover:text-rose-600 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-sm transition-all">
+                        <i data-lucide="heart" class="w-4 h-4" id="favIcon"></i>
+                        <span id="favText">Simpan</span>
+                    </button>
+                    <button onclick="window.print()" class="inline-flex items-center gap-1.5 bg-white hover:bg-slate-100 text-slate-700 text-xs sm:text-sm font-semibold px-3.5 py-2.5 rounded-xl border border-slate-200 shadow-sm transition-all">
+                        <i data-lucide="printer" class="w-4 h-4"></i> Cetak Halaman
+                    </button>
+                </div>
+            </div>
+
+            <!-- Detail Content Wrapper -->
+            <div class="bg-white rounded-3xl shadow-xl border border-slate-200/80 overflow-hidden">
+                <!-- Top Cover Header -->
+                <div class="relative h-64 sm:h-80 md:h-96 w-full overflow-hidden bg-slate-900">
+                    <img id="detailImage" src="" alt="" class="w-full h-full object-cover opacity-90 transition-transform duration-700 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+                    
+                    <!-- Floating Badge & Text -->
+                    <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
+                        <div class="flex flex-wrap items-center gap-2 mb-3">
+                            <span id="detailCategory" class="bg-emerald-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider"></span>
+                            <span id="detailConservation" class="bg-slate-800/80 backdrop-blur-md text-emerald-300 border border-emerald-500/30 text-xs font-semibold px-3 py-1 rounded-full"></span>
+                        </div>
+                        <h1 id="detailLocalName" class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight"></h1>
+                        <p id="detailScientificName" class="text-emerald-300 italic text-lg sm:text-2xl font-serif mt-1"></p>
+                    </div>
+                </div>
+
+                <!-- Main Details Section Grid -->
+                <div class="p-6 sm:p-8 lg:p-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Left & Center Columns: Core Info & Care -->
+                    <div class="lg:col-span-2 space-y-8">
+                        
+                        <!-- Quick Stats Badges -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <div class="bg-emerald-50/70 border border-emerald-100 p-4 rounded-2xl">
+                                <span class="text-slate-500 text-xs font-medium block mb-1">Famili Botani</span>
+                                <span id="detailFamily" class="font-bold text-slate-800 text-sm sm:text-base"></span>
+                            </div>
+                            <div class="bg-blue-50/70 border border-blue-100 p-4 rounded-2xl">
+                                <span class="text-slate-500 text-xs font-medium block mb-1">Penyiraman</span>
+                                <span id="detailWatering" class="font-bold text-slate-800 text-sm sm:text-base"></span>
+                            </div>
+                            <div class="bg-amber-50/70 border border-amber-100 p-4 rounded-2xl">
+                                <span class="text-slate-500 text-xs font-medium block mb-1">Pencahayaan</span>
+                                <span id="detailLight" class="font-bold text-slate-800 text-sm sm:text-base"></span>
+                            </div>
+                            <div class="bg-purple-50/70 border border-purple-100 p-4 rounded-2xl">
+                                <span class="text-slate-500 text-xs font-medium block mb-1">Asal Usul</span>
+                                <span id="detailOrigin" class="font-bold text-slate-800 text-sm sm:text-base"></span>
+                            </div>
+                        </div>
+
+                        <!-- Description & Background -->
+                        <div class="space-y-3">
+                            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="book-open" class="w-5 h-5 text-emerald-600"></i> Profil & Keterangan
+                            </h2>
+                            <p id="detailDescription" class="text-slate-600 leading-relaxed text-sm sm:text-base"></p>
+                        </div>
+
+                        <!-- Benefits & Uses -->
+                        <div class="space-y-3">
+                            <h2 class="text-xl font-bold text-slate-900 flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-emerald-600"></i> Kegunaan & Manfaat
+                            </h2>
+                            <ul id="detailBenefitsList" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                <!-- Dynamic Benefits List -->
+                            </ul>
+                        </div>
+
+                        <!-- Care & Cultivation Tips -->
+                        <div class="bg-gradient-to-br from-slate-900 to-emerald-950 text-white p-6 sm:p-8 rounded-3xl space-y-4 shadow-lg">
+                            <h2 class="text-xl font-bold text-emerald-400 flex items-center gap-2">
+                                <i data-lucide="heart-pulse" class="w-5 h-5"></i> Panduan & Petua Penjagaan EcoVerse
+                            </h2>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-slate-200">
+                                <div>
+                                    <h4 class="font-bold text-white text-base mb-1 flex items-center gap-1.5">
+                                        <i data-lucide="layers" class="w-4 h-4 text-emerald-400"></i> Media Tanah
+                                    </h4>
+                                    <p id="detailSoil" class="text-slate-300"></p>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white text-base mb-1 flex items-center gap-1.5">
+                                        <i data-lucide="thermometer" class="w-4 h-4 text-emerald-400"></i> Iklim & Suhu
+                                    </h4>
+                                    <p id="detailClimate" class="text-slate-300"></p>
+                                </div>
+                                <div class="sm:col-span-2 pt-2 border-t border-slate-800">
+                                    <h4 class="font-bold text-white text-base mb-1 flex items-center gap-1.5">
+                                        <i data-lucide="alert-triangle" class="w-4 h-4 text-amber-400"></i> Catatan Keselamatan / Toksisiti
+                                    </h4>
+                                    <p id="detailTox" class="text-slate-300"></p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right Column: Dedicated QR Code & Unique Link Card -->
+                    <div class="space-y-6">
+                        
+                        <!-- Dedicated QR Code Box -->
+                        <div class="bg-slate-50 border-2 border-emerald-200/80 rounded-3xl p-6 text-center space-y-5 sticky top-24 shadow-sm">
+                            <div class="inline-flex items-center gap-2 text-emerald-800 font-extrabold text-sm tracking-wide bg-emerald-100/70 px-3.5 py-1.5 rounded-full">
+                                <i data-lucide="qr-code" class="w-4 h-4"></i> Kod QR Laman Sendiri
+                            </div>
+
+                            <p class="text-xs text-slate-500 leading-relaxed">
+                                Imbas kod QR di bawah menggunakan kamera telefon untuk terus ke profil laman rasmi <strong><span id="qrPlantName"></span></strong> ini.
+                            </p>
+
+                            <!-- QR Code Rendering Container -->
+                            <div class="bg-white p-4 rounded-2xl inline-block shadow-md border border-slate-200 mx-auto" id="qrcodeWrapper">
+                                <div id="qrcode" class="flex justify-center items-center min-w-[180px] min-h-[180px]"></div>
+                            </div>
+
+                            <!-- Dedicated Direct URL Display -->
+                            <div class="space-y-2">
+                                <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Pautan Halaman Penuh</span>
+                                <div class="flex items-center gap-1 bg-white border border-slate-200 rounded-xl p-1.5 pl-3">
+                                    <input type="text" id="plantPageUrlInput" readonly class="w-full text-xs text-slate-600 bg-transparent outline-none font-mono">
+                                    <button onclick="copyPlantUrl()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg transition-colors flex items-center gap-1">
+                                        <i data-lucide="copy" class="w-3.5 h-3.5"></i> Salin
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Actions for QR Code -->
+                            <div class="pt-2 border-t border-slate-200/80 flex flex-col gap-2">
+                                <button onclick="downloadQRCode()" class="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-2.5 rounded-xl transition-colors flex items-center justify-center gap-2">
+                                    <i data-lucide="download" class="w-4 h-4"></i> Muat Turun Kod QR (PNG)
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Favorites Modal Overlay -->
+    <div id="favModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-lg w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-2 text-slate-800 font-bold">
+                    <i data-lucide="heart" class="w-5 h-5 text-rose-500 fill-rose-500"></i>
+                    <span>Senarai Tanaman Kegemaran Saya</span>
+                </div>
+                <button onclick="toggleFavoritesModal()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="favListContainer" class="p-5 overflow-y-auto space-y-3 flex-grow custom-scrollbar">
+                <!-- Dynamic favorites list -->
+            </div>
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-right">
+                <button onclick="toggleFavoritesModal()" class="bg-slate-800 text-white text-xs font-bold px-4 py-2 rounded-xl hover:bg-slate-900 transition-colors">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 border border-slate-700 pointer-events-none">
+        <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400" id="toastIcon"></i>
+        <span id="toastMsg" class="text-xs sm:text-sm font-medium"></span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Setkan URL rasmi Google Site anda di sini
+        const GOOGLE_SITE_BASE_URL = "https://sites.google.com/moe-dl.edu.my/amaneco";
+
+        // ID Google Sheet Sasaran & Web App API URL
+        const GOOGLE_SHEET_ID = "1C8q47pY9CHJ7cEcSBo70GzC_n_FbucGoc7utixnrjXg";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzQQEZYhodH91QZ5gWnMgojIRo2OxP_r0BxF-xi9-kufh9efe5fArm1iyQHyy_MXVBS/exec";
+
+        // Data Tanaman Kompleks Direktori EcoVerse (Lokal & Sandaran API)
+        let PLANT_DATABASE = [
+            {
+                id: "monstera-deliciosa",
+                localName: "Monstera / Pokok Janda Bolong",
+                scientificName: "Monstera deliciosa",
+                family: "Araceae",
+                category: "Hiasan Dalaman",
+                conservationStatus: "Risiko Rendah (LC)",
+                origin: "Hutan Hujan Tropika Mexico & Central America",
+                light: "Cahaya Terang Tidak Terus (Indirect Light)",
+                watering: "Sederhana (1-2 kali seminggu)",
+                soil: "Campuran gambut, perlite & sabut kelapa yang poros",
+                climate: "Tropika & Subtropika (18°C - 30°C)",
+                toxicity: "Toksik kepada haiwan peliharaan jika tertelan (Mengandungi Kalsium Oksalat).",
+                description: "Monstera deliciosa adalah tanaman hiasan ikonik yang terkenal dengan fenestrasi (lubang semula jadi) pada daun hijau tua berkilatnya. Ia tumbuh menjalar dan sesuai dijadikan penyeri ruang tamu atau pejabat moden.",
+                benefits: [
+                    "Memperbaiki kualiti udara dalaman dengan menapis toksin.",
+                    "Memberikan nilai estetika tinggi pada hiasan dalaman.",
+                    "Meningkatkan kelembapan udara persekitaran semula jadi.",
+                    "Sangat tahan lasak dan mudah dipropagasi melalui keratan batang."
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=800&q=80",
+                plantUrl: "https://sites.google.com/moe-dl.edu.my/amaneco?plant=monstera-deliciosa"
+            },
+            {
+                id: "sansevieria-trifasciata",
+                localName: "Lidah Jin / Lidah Mertua",
+                scientificName: "Sansevieria trifasciata",
+                family: "Asparagaceae",
+                category: "Penapis Udara",
+                conservationStatus: "Selamat / Selamat Ditanam",
+                origin: "Afrika Barat (Nigeria hingga Congo)",
+                light: "Separuh Teduh (Partial Shade)",
+                watering: "Rendah (1 kali setiap 2 minggu)",
+                soil: "Tanah kaktus/sukulen yang cepat mengalirkan air",
+                climate: "Tahan panas & kemarau (15°C - 35°C)",
+                toxicity: "Sedikit toksik kepada kucing dan anjing.",
+                description: "Tanaman sukulen tegak yang amat popular kerana keupayaannya bertahan dalam persekitaran cahaya rendah dan kurang air.",
+                benefits: [
+                    "Menghasilkan oksigen secara aktif pada waktu malam.",
+                    "Menyerap Benzena, Formaldehid dan Xylena.",
+                    "Penyelenggaraan amat rendah.",
+                    "Sesuai di bilik tidur."
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1593482892290-f54927ae1bf6?auto=format&fit=crop&w=800&q=80",
+                plantUrl: "https://sites.google.com/moe-dl.edu.my/amaneco?plant=sansevieria-trifasciata"
+            },
+            {
+                id: "orthosiphon-aristatus",
+                localName: "Misai Kucing",
+                scientificName: "Orthosiphon aristatus",
+                family: "Lamiaceae",
+                category: "Herba & Perubatan",
+                conservationStatus: "Tempatan / Melimpah",
+                origin: "Asia Tenggara & Australia Utara",
+                light: "Cahaya Penuh (Direct Sun)",
+                watering: "Kerap (Setiap hari)",
+                soil: "Tanah gembur kaya humus dengan saliran baik",
+                climate: "Tropika Lembap (24°C - 34°C)",
+                toxicity: "Selamat untuk manusia (digunakan sebagai teh herba).",
+                description: "Tanaman renek herba tradisional dengan bunga putih atau ungu muda yang mempunyai stamen panjang menyerupai misai kucing.",
+                benefits: [
+                    "Membantu melancarkan pembuangan air kecil (Diuretik).",
+                    "Mengurangkan risiko batu karang dan gout.",
+                    "Antioksidan & anti-keradangan tinggi."
+                ],
+                imageUrl: "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=800&q=80",
+                plantUrl: "https://sites.google.com/moe-dl.edu.my/amaneco?plant=orthosiphon-aristatus"
+            }
+        ];
+
+        // App State
+        let activeCategory = "Semua";
+        let searchQuery = "";
+        let selectedLight = "";
+        let currentSort = "name-asc";
+        let favorites = JSON.parse(localStorage.getItem('ecoverse_favs') || '[]');
+        let qrcodeInstance = null;
+        let currentPlantId = null;
+
+        // Initialize App & Fetch Live Data
+        window.onload = function() {
+            lucide.createIcons();
+            updateFavBadge();
+
+            // Mendengar perubahan hash URL dan navigasi sejarah penyemak imbas
+            window.addEventListener('hashchange', handleRouting);
+            window.addEventListener('popstate', handleRouting);
+
+            // Load data from Web App / Google Sheet on start
+            loadDataFromGoogleSheet();
+        };
+
+        async function loadDataFromGoogleSheet(isManualRefresh = false) {
+            const refreshIcon = document.getElementById('refreshSheetIcon');
+            const statusText = document.getElementById('sheetStatusText');
+            const syncPulse = document.getElementById('syncPulse');
+            const syncDot = document.getElementById('syncDot');
+
+            if (refreshIcon) refreshIcon.classList.add('animate-spin');
+            if (statusText) statusText.innerText = "Mengambil data daripada Web App API...";
+
+            try {
+                // Utamakan pautan Google Apps Script Web App API
+                const response = await fetch(WEB_APP_URL);
+                if (!response.ok) throw new Error("Gagal menyambung ke Web App API");
+
+                const result = await response.json();
+
+                if (result && result.status === "success" && Array.isArray(result.plants) && result.plants.length > 0) {
+                    PLANT_DATABASE = result.plants;
+                    if (statusText) statusText.innerText = `Terhubung Web App API (${PLANT_DATABASE.length} Tanaman)`;
+                    if (syncDot) syncDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500";
+                    if (syncPulse) syncPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
+                    if (isManualRefresh) showToast("Data Web App API berjaya dikemas kini!");
+                    return;
+                }
+                throw new Error("Respon API tidak mengandungi senarai tanaman");
+
+            } catch (webAppErr) {
+                console.warn("Mesej Ralat Web App API, mencuba kaedah gviz direct:", webAppErr);
+
+                // Sandaran 1: Sambungan terus GViz Google Sheet
+                const gvizUrl = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&_t=${Date.now()}`;
+                try {
+                    const gvizResponse = await fetch(gvizUrl);
+                    if (!gvizResponse.ok) throw new Error("Gagal mengambil data gviz");
+
+                    const text = await gvizResponse.text();
+                    const jsonString = text.substring(text.indexOf('{'), text.lastIndexOf('}') + 1);
+                    const data = JSON.parse(jsonString);
+
+                    if (data && data.table && data.table.rows && data.table.rows.length > 0) {
+                        const parsedPlants = parseGoogleSheetRows(data.table.rows);
+                        if (parsedPlants.length > 0) {
+                            PLANT_DATABASE = parsedPlants;
+                            if (statusText) statusText.innerText = `Terhubung Live Sheet (${PLANT_DATABASE.length} Tanaman)`;
+                            if (syncDot) syncDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500";
+                            if (syncPulse) syncPulse.className = "animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75";
+                            if (isManualRefresh) showToast("Data Google Sheet (GViz) berjaya dikemas kini!");
+                            return;
+                        }
+                    }
+                } catch (gvizErr) {
+                    console.warn("Mesej Ralat Google Sheet GViz:", gvizErr);
+                    if (statusText) statusText.innerText = "Guna Data Lokal (Pastikan akses Web App / Sheet dibuka public)";
+                    if (syncDot) syncDot.className = "relative inline-flex rounded-full h-2.5 w-2.5 bg-amber-500";
+                    if (syncPulse) syncPulse.className = "hidden";
+                    if (isManualRefresh) showToast("Menggunakan data setempat. Sila semak akses pautan.");
+                }
+            } finally {
+                if (refreshIcon) refreshIcon.classList.remove('animate-spin');
+                setupCategories();
+                handleFilterChange();
+                // Semak penuding hash / pautan direct automatik sebaik data selesai dimuatkan
+                handleRouting();
+            }
+        }
+
+        function parseGoogleSheetRows(rows) {
+            const plants = [];
+
+            rows.forEach((row) => {
+                const c = row.c;
+                if (!c || c.length === 0) return;
+
+                // Membaca kolom mengikut struktur header Google Sheet
+                const idVal = c[0]?.v ? String(c[0].v).trim() : '';
+                const localName = c[1]?.v ? String(c[1].v).trim() : '';
+                const scientificName = c[2]?.v ? String(c[2].v).trim() : '';
+
+                if (!localName) return; // Abaikan baris kosong
+                
+                // Abaikan baris header jika terpapar
+                if (idVal.toLowerCase() === 'id tanaman' || localName.toLowerCase() === 'nama tempatan') return;
+
+                const plantId = idVal || localName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+                const family = c[3]?.v ? String(c[3].v).trim() : 'Unspecified';
+                const category = c[4]?.v ? String(c[4].v).trim() : 'Lain-lain';
+                const conservationStatus = c[5]?.v ? String(c[5].v).trim() : 'Selamat';
+                const origin = c[6]?.v ? String(c[6].v).trim() : 'Tidak dinyatakan';
+                const light = c[7]?.v ? String(c[7].v).trim() : 'Sederhana';
+                const watering = c[8]?.v ? String(c[8].v).trim() : 'Sederhana';
+                const soil = c[9]?.v ? String(c[9].v).trim() : 'Tanah biasa';
+                const climate = c[10]?.v ? String(c[10].v).trim() : 'Tropika';
+                const toxicity = c[11]?.v ? String(c[11].v).trim() : 'Tiada maklumat';
+                const description = c[12]?.v ? String(c[12].v).trim() : '';
+                
+                // Parsing Manfaat/Kegunaan (Boleh berbentuk baris baharu atau teks berpoin)
+                let benefitsRaw = c[13]?.v ? String(c[13].v).trim() : '';
+                let benefits = benefitsRaw
+                    ? benefitsRaw.split(/\n|\r\n|;/).map(b => b.replace(/^[0-9]+\.\s*/, '').trim()).filter(b => b.length > 0)
+                    : ["Meningkatkan keindahan lanskap semula jadi."];
+
+                const imageUrl = c[14]?.v ? String(c[14].v).trim() : 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=800&q=80';
+                
+                // Kolom ke-16 (Index 15): Pautan URL Tanaman Rasmi (Guna Query Param ?plant=)
+                const plantUrl = c[15]?.v ? String(c[15].v).trim() : `${GOOGLE_SITE_BASE_URL}?plant=${plantId}`;
+
+                plants.push({
+                    id: plantId,
+                    localName: localName,
+                    scientificName: scientificName,
+                    family: family,
+                    category: category,
+                    conservationStatus: conservationStatus,
+                    origin: origin,
+                    light: light,
+                    watering: watering,
+                    soil: soil,
+                    climate: climate,
+                    toxicity: toxicity,
+                    description: description,
+                    benefits: benefits,
+                    imageUrl: imageUrl,
+                    plantUrl: plantUrl
+                });
+            });
+
+            return plants;
+        }
+
+        function setupCategories() {
+            const categories = ["Semua", ...new Set(PLANT_DATABASE.map(p => p.category))];
+            const container = document.getElementById('categoryFilterContainer');
+            
+            container.innerHTML = categories.map(cat => `
+                <button onclick="setCategory('${cat}')" 
+                    class="category-btn px-4 py-2 rounded-xl border transition-all whitespace-nowrap ${
+                        activeCategory === cat 
+                        ? 'bg-emerald-600 text-white border-emerald-600 font-semibold shadow-sm' 
+                        : 'bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-200'
+                    }">
+                    ${cat}
+                </button>
+            `).join('');
+        }
+
+        function setCategory(cat) {
+            activeCategory = cat;
+            setupCategories();
+            handleFilterChange();
+        }
+
+        function handleFilterChange() {
+            searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+            selectedLight = document.getElementById('lightFilter').value;
+            currentSort = document.getElementById('sortSelect').value;
+
+            // Toggle clear search button
+            document.getElementById('clearSearchBtn').classList.toggle('hidden', searchQuery === "");
+
+            let filtered = PLANT_DATABASE.filter(plant => {
+                const matchCategory = (activeCategory === "Semua") || (plant.category === activeCategory);
+                const matchSearch = searchQuery === "" || 
+                    plant.localName.toLowerCase().includes(searchQuery) ||
+                    plant.scientificName.toLowerCase().includes(searchQuery) ||
+                    plant.family.toLowerCase().includes(searchQuery) ||
+                    plant.description.toLowerCase().includes(searchQuery);
+                const matchLight = selectedLight === "" || plant.light === selectedLight;
+
+                return matchCategory && matchSearch && matchLight;
+            });
+
+            // Sorting
+            filtered.sort((a, b) => {
+                if (currentSort === 'name-asc') return a.localName.localeCompare(b.localName);
+                if (currentSort === 'name-desc') return b.localName.localeCompare(a.localName);
+                if (currentSort === 'scientific-asc') return a.scientificName.localeCompare(b.scientificName);
+                return 0;
+            });
+
+            renderGrid(filtered);
+
+            // Active filter badge indicator
+            const isFiltered = activeCategory !== "Semua" || searchQuery !== "" || selectedLight !== "";
+            document.getElementById('activeFilterBadge').classList.toggle('hidden', !isFiltered);
+        }
+
+        function clearSearch() {
+            document.getElementById('searchInput').value = "";
+            handleFilterChange();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = "";
+            document.getElementById('lightFilter').value = "";
+            document.getElementById('sortSelect').value = "name-asc";
+            activeCategory = "Semua";
+            setupCategories();
+            handleFilterChange();
+        }
+
+        function renderGrid(plants) {
+            const grid = document.getElementById('plantGrid');
+            const emptyState = document.getElementById('emptyState');
+            document.getElementById('resultCount').innerText = plants.length;
+
+            if (plants.length === 0) {
+                grid.classList.add('hidden');
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            grid.classList.remove('hidden');
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = plants.map(plant => {
+                const isFav = favorites.includes(plant.id);
+                return `
+                <div onclick="navigateToPlant('${plant.id}')" class="group bg-white rounded-3xl overflow-hidden border border-slate-200/80 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col cursor-pointer transform hover:-translate-y-1">
+                    <!-- Card Image Header -->
+                    <div class="relative h-52 w-full overflow-hidden bg-slate-100">
+                        <img src="${plant.imageUrl}" alt="${plant.localName}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent"></div>
+                        <span class="absolute top-3 left-3 bg-white/90 backdrop-blur-md text-emerald-800 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm">
+                            ${plant.category}
+                        </span>
+                        <button onclick="event.stopPropagation(); toggleFavorite('${plant.id}')" class="absolute top-3 right-3 p-2 rounded-full bg-white/80 backdrop-blur-md hover:bg-white text-slate-600 transition-colors shadow-sm">
+                            <i data-lucide="heart" class="w-4 h-4 ${isFav ? 'fill-rose-500 text-rose-500' : ''}"></i>
+                        </button>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="p-5 flex-grow flex flex-col justify-between space-y-4">
+                        <div>
+                            <span class="text-[11px] font-bold tracking-wider text-emerald-600 uppercase block mb-1">${plant.family}</span>
+                            <h3 class="font-bold text-slate-900 text-lg leading-snug group-hover:text-emerald-700 transition-colors">${plant.localName}</h3>
+                            <p class="text-xs text-slate-500 italic font-serif mt-0.5">${plant.scientificName}</p>
+                        </div>
+
+                        <p class="text-slate-600 text-xs line-clamp-2 leading-relaxed">
+                            ${plant.description}
+                        </p>
+
+                        <!-- Meta Chips -->
+                        <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                            <span class="flex items-center gap-1">
+                                <i data-lucide="sun" class="w-3.5 h-3.5 text-amber-500"></i> ${plant.light.split(' ')[0]}
+                            </span>
+                            <span class="font-semibold text-emerald-700 hover:underline inline-flex items-center gap-1 text-xs">
+                                Lihat Halaman <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+
+            lucide.createIcons();
+        }
+
+        function handleRouting() {
+            let plantId = null;
+
+            // 1. Semak parameter daripada URL iframe sendiri (?plant=id atau ?id=id)
+            try {
+                const searchParams = new URLSearchParams(window.location.search);
+                plantId = searchParams.get('plant') || searchParams.get('id');
+            } catch (e) {
+                console.warn("Could not read URL search params:", e);
+            }
+
+            // 2. Semak document.referrer (URL Google Sites Utama semasa iframe di-embed!)
+            if (!plantId && document.referrer) {
+                try {
+                    const refUrl = new URL(document.referrer);
+                    plantId = refUrl.searchParams.get('plant') || refUrl.searchParams.get('id');
+
+                    // Sandaran jika URL referrer masih menggunakan format lama (#plant-id)
+                    if (!plantId && refUrl.hash) {
+                        if (refUrl.hash.startsWith('#plant-')) {
+                            plantId = refUrl.hash.replace('#plant-', '');
+                        } else if (refUrl.hash.length > 1) {
+                            plantId = refUrl.hash.replace('#', '');
+                        }
+                    }
+                } catch (e) {
+                    console.warn("Could not parse referrer URL:", e);
+                }
+            }
+
+            // 3. Semak hash daripada window.location.hash iframe
+            if (!plantId) {
+                const hash = window.location.hash;
+                if (hash.startsWith('#plant-')) {
+                    plantId = hash.replace('#plant-', '');
+                } else if (hash.length > 1 && !hash.startsWith('#catalog')) {
+                    plantId = hash.replace('#', '');
+                }
+            }
+
+            if (plantId) {
+                showPlantDetailPage(plantId);
+            } else {
+                showCatalogPage();
+            }
+        }
+
+        function navigateToHome() {
+            try {
+                if (window.location.hash) {
+                    if (window.location.protocol === 'blob:' || window.location.protocol === 'about:') {
+                        window.location.hash = '';
+                    } else {
+                        history.pushState("", document.title, window.location.pathname);
+                    }
+                }
+            } catch (err) {
+                try {
+                    window.location.hash = '';
+                } catch (e) {
+                    console.warn("Could not modify location hash:", e);
+                }
+            }
+            showCatalogPage();
+        }
+
+        function navigateToPlant(id) {
+            try {
+                window.location.hash = `plant-${id}`;
+            } catch (err) {
+                console.warn("Could not update location hash:", err);
+            }
+            showPlantDetailPage(id);
+        }
+
+        function showCatalogPage() {
+            document.getElementById('catalogView').classList.remove('hidden');
+            document.getElementById('detailView').classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            handleFilterChange();
+        }
+
+        function showPlantDetailPage(plantId) {
+            const plant = PLANT_DATABASE.find(p => p.id === plantId);
+            if (!plant) {
+                navigateToHome();
+                return;
+            }
+
+            currentPlantId = plant.id;
+
+            // Hide catalog, show detail view
+            document.getElementById('catalogView').classList.add('hidden');
+            document.getElementById('detailView').classList.remove('hidden');
+
+            // Populate content
+            document.getElementById('detailImage').src = plant.imageUrl;
+            document.getElementById('detailCategory').innerText = plant.category;
+            document.getElementById('detailConservation').innerText = plant.conservationStatus;
+            document.getElementById('detailLocalName').innerText = plant.localName;
+            document.getElementById('detailScientificName').innerText = plant.scientificName;
+            document.getElementById('detailFamily').innerText = plant.family;
+            document.getElementById('detailWatering').innerText = plant.watering;
+            document.getElementById('detailLight').innerText = plant.light;
+            document.getElementById('detailOrigin').innerText = plant.origin;
+            document.getElementById('detailDescription').innerText = plant.description;
+            document.getElementById('detailSoil').innerText = plant.soil;
+            document.getElementById('detailClimate').innerText = plant.climate;
+            document.getElementById('detailTox').innerText = plant.toxicity;
+            document.getElementById('qrPlantName').innerText = plant.localName;
+
+            // Populate Benefits
+            const benefitsContainer = document.getElementById('detailBenefitsList');
+            benefitsContainer.innerHTML = plant.benefits.map(b => `
+                <li class="flex items-start gap-2 bg-emerald-50/50 border border-emerald-100 p-3 rounded-xl text-xs sm:text-sm text-slate-700">
+                    <i data-lucide="check" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5"></i>
+                    <span>${b}</span>
+                </li>
+            `).join('');
+
+            // Favorites Button State
+            updateDetailFavBtn();
+
+            // Construct Full Page URL for QR Code & Sharing (Guna format ?plant=ID)
+            const currentFullUrl = plant.plantUrl || `${GOOGLE_SITE_BASE_URL}?plant=${plant.id}`;
+            document.getElementById('plantPageUrlInput').value = currentFullUrl;
+
+            // Generate Dedicated Dynamic QR Code
+            generatePlantQRCode(currentFullUrl);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            lucide.createIcons();
+        }
+
+        function generateQRCode(url) {
+            generatePlantQRCode(url);
+        }
+
+        function generatePlantQRCode(urlOrId) {
+            let targetUrl = urlOrId;
+            if (!targetUrl.startsWith('http')) {
+                targetUrl = `${GOOGLE_SITE_BASE_URL}?plant=${urlOrId}`;
+            }
+
+            const qrcodeContainer = document.getElementById('qrcode');
+            if (qrcodeContainer) {
+                qrcodeContainer.innerHTML = '';
+                
+                if (typeof QRCode !== 'undefined') {
+                    qrcodeInstance = new QRCode(qrcodeContainer, {
+                        text: targetUrl,
+                        width: 180,
+                        height: 180,
+                        colorDark: "#052e16",
+                        colorLight: "#ffffff",
+                        correctLevel: QRCode.CorrectLevel.H
+                    });
+                } else {
+                    const encodedUrl = encodeURIComponent(targetUrl);
+                    qrcodeContainer.innerHTML = `<img id="qr-img-element" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodedUrl}&margin=10" alt="Kod QR" class="w-[180px] h-[180px] rounded-lg">`;
+                }
+            }
+
+            const urlInput = document.getElementById('plantPageUrlInput');
+            if (urlInput) {
+                urlInput.value = targetUrl;
+            }
+        }
+
+        // Fungsi Salin Pautan Rasmi
+        function copyPlantUrl() {
+            const urlInput = document.getElementById('plantPageUrlInput');
+            if (urlInput) {
+                urlInput.select();
+                document.execCommand('copy');
+                showToast("Pautan laman tanaman telah disalin!");
+            }
+        }
+
+        // Fungsi Muat Turun Gambar Kod QR (PNG)
+        function downloadQRCode() {
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            const qrImg = document.querySelector('#qrcode img');
+            
+            let dataUrl = '';
+            if (qrCanvas) {
+                dataUrl = qrCanvas.toDataURL('image/png');
+            } else if (qrImg) {
+                dataUrl = qrImg.src;
+            }
+
+            if (!dataUrl) {
+                showToast("Gagal menjana imej Kod QR.");
+                return;
+            }
+
+            if (dataUrl.startsWith('data:')) {
+                const a = document.createElement('a');
+                a.href = dataUrl;
+                a.download = `QR_${currentPlantId || 'plant'}.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                showToast("Kod QR berjaya dimuat turun!");
+            } else {
+                fetch(dataUrl)
+                    .then(res => res.blob())
+                    .then(blob => {
+                        const blobUrl = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = blobUrl;
+                        a.download = `QR_${currentPlantId || 'plant'}.png`;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(blobUrl);
+                        showToast("Kod QR berjaya dimuat turun!");
+                    })
+                    .catch(() => showToast("Gagal memuat turun gambar Kod QR."));
+            }
+        }
+
+        function openRandomPlant() {
+            const randomIndex = Math.floor(Math.random() * PLANT_DATABASE.length);
+            const randomPlant = PLANT_DATABASE[randomIndex];
+            navigateToPlant(randomPlant.id);
+        }
+
+        function toggleFavorite(id) {
+            if (favorites.includes(id)) {
+                favorites = favorites.filter(favId => favId !== id);
+                showToast("Dikeluarkan daripada senarai kegemaran.");
+            } else {
+                favorites.push(id);
+                showToast("Ditambah ke senarai kegemaran!");
+            }
+            localStorage.setItem('ecoverse_favs', JSON.stringify(favorites));
+            updateFavBadge();
+            handleFilterChange();
+            if (currentPlantId === id) updateDetailFavBtn();
+        }
+
+        function toggleCurrentFavorite() {
+            if (currentPlantId) {
+                toggleFavorite(currentPlantId);
+            }
+        }
+
+        function updateDetailFavBtn() {
+            const isFav = favorites.includes(currentPlantId);
+            const favIcon = document.getElementById('favIcon');
+            const favText = document.getElementById('favText');
+
+            if (isFav) {
+                favIcon.classList.add('fill-rose-500', 'text-rose-500');
+                favText.innerText = "Tersimpan";
+            } else {
+                favIcon.classList.remove('fill-rose-500', 'text-rose-500');
+                favText.innerText = "Simpan";
+            }
+        }
+
+        function updateFavBadge() {
+            const badge = document.getElementById('favCountBadge');
+            badge.innerText = favorites.length;
+            badge.classList.toggle('hidden', favorites.length === 0);
+        }
+
+        function toggleFavoritesModal() {
+            const modal = document.getElementById('favModal');
+            const isHidden = modal.classList.contains('hidden');
+
+            if (isHidden) {
+                renderFavList();
+                modal.classList.remove('hidden');
+            } else {
+                modal.classList.add('hidden');
+            }
+        }
+
+        function renderFavList() {
+            const container = document.getElementById('favListContainer');
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-400">
+                        <i data-lucide="heart-off" class="w-10 h-10 mx-auto mb-2 stroke-1"></i>
+                        <p class="text-sm">Tiada tanaman kegemaran disimpan lagi.</p>
+                    </div>
+                `;
+                lucide.createIcons();
+                return;
+            }
+
+            const favPlants = PLANT_DATABASE.filter(p => favorites.includes(p.id));
+            container.innerHTML = favPlants.map(p => `
+                <div class="flex items-center justify-between p-3 bg-slate-50 hover:bg-emerald-50/50 rounded-2xl border border-slate-200/80 transition-colors">
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="toggleFavoritesModal(); navigateToPlant('${p.id}')">
+                        <img src="${p.imageUrl}" alt="${p.localName}" class="w-12 h-12 rounded-xl object-cover">
+                        <div>
+                            <h4 class="font-bold text-slate-800 text-sm">${p.localName}</h4>
+                            <p class="text-xs text-slate-500 italic font-serif">${p.scientificName}</p>
+                        </div>
+                    </div>
+                    <button onclick="toggleFavorite('${p.id}'); renderFavList();" class="text-slate-400 hover:text-rose-500 p-2">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
